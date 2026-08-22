@@ -1,12 +1,12 @@
 import httpStatus from "http-status";
-import { User } from "...models/user.model";
+import { User } from "..models/user.model.js";
 import bcrypt, { hash } from "bcrypt";
 
-const register = async (req , res) =>{
-    const {name, username, password} = req.body;
+const login = async (req , res) =>{
+    const {username, password} = req.body;
 
     if(!username || !password) {
-        return res.status(400).json({message: "Please Provei"})
+        return res.status(400).json({message: "Please Provide"})
     }
 
     try {
@@ -25,14 +25,16 @@ const register = async (req , res) =>{
     } catch (e) {
         return res.status(500).json({message: `Something went wrong ${e}`})
     }
-    }
+}
+    
+    const register = async (req , res) =>{
+    const {name, username, password} = req.body;
 
     try {
-        const existingUser = await User.findOne({ useername });
+        const existingUser = await User.findOne({ username });
         if(existingUser) {
             return res.status(httpStatus.FOUND).json({message: "User already exists"});
         }
-    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -50,6 +52,6 @@ const register = async (req , res) =>{
         res.json({message: `something went wrong ${e}`})
     }
 }
-}
+
 
 export { login, register}
