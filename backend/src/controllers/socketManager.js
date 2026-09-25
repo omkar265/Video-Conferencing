@@ -1,5 +1,5 @@
 import { connections } from "mongoose";
-import { Server, socket } from "socket.io";
+import { Server, Socket } from "socket.io";
 
 let conncetion = {}
 let messages = {} 
